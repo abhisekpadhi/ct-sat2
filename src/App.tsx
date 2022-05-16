@@ -8,7 +8,7 @@ function App() {
   const [count, setCount] = useState(0)
   useEffect(() => {
     get({
-      iframeUrl: 'https://classy-tartufo-cde318.netlify.app/',
+      iframeUrl: 'https://tosshub.netlify.app/',
       dataKey: 'chocolate-chip-oatmeal',
     }).then(res => {
       console.log(`get res: ${JSON.stringify(res)}`);
