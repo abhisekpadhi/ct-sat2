@@ -4,10 +4,31 @@
     <meta charset="UTF-8" />
     <link rel="icon" type="image/svg+xml" href="/src/favicon.svg" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Vite App</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="game.js" charset="utf-8"></script>
+    <title>Game</title>
   </head>
   <body>
     <div id="root"></div>
+    <div id="game">
+      <div class="border-left"></div>
+      <div class="game-container">
+        <div class="border-top"></div>
+        <div class="sky">
+          <div class="bird"></div>
+        </div>
+      </div>
+      <div class="ground-container">
+        <div class="ground-moving"></div>
+      </div>
+      <div class="border-right"></div>
+    </div>
+    <div id="genie">
+      <div class="genie-container">
+        Genie here...
+        <button onclick="showGame()">show game</button>
+      </div>
+    </div>
     <script type="module" src="/src/main.tsx"></script>
   </body>
 </html>
