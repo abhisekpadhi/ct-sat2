@@ -1,51 +1,57 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <link rel="icon" type="image/svg+xml" href="/src/favicon.svg" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link rel="stylesheet" href="./style.css">
-    <script src="game.js" charset="utf-8"></script>
-    <script src="https://rawcdn.githack.com/abhisekpadhi/ct-hub/0e45aeb90cca9c77ff8b3a2e189a0c54e108f15f/embed.js"></script>
-    <title>Game</title>
-  </head>
-  <body>
-    <div id="root"></div>
-    <div id="game">
-      <div class="border-left"></div>
-      <div class="game-container">
-        <div class="border-top"></div>
-        <div class="sky">
-          <div class="bird"></div>
-        </div>
-      </div>
-      <div class="ground-container">
-        <div class="ground-moving"></div>
-      </div>
-      <div class="border-right"></div>
+<head>
+  <meta charset="UTF-8" />
+  <link rel="icon" type="image/svg+xml" href="/src/favicon.svg" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="stylesheet" href="./style.css">
+  <script src="game.js" charset="utf-8"></script>
+  <script
+          src="https://rawcdn.githack.com/abhisekpadhi/ct-hub/676b28ed38beb1a1283e845df533886c7c76c4df/embed.js"
+  >
+  </script>
+  <title>Game</title>
+</head>
+<body>
+<div id="root"></div>
+<div id="game">
+  <div class="border-left"></div>
+  <div class="game-container">
+    <div class="border-top"></div>
+    <div class="sky">
+      <div class="bird"></div>
     </div>
-    <div id="genie">
-      <div class="genie-container">
-        <div id="rapydgenie"></div> <!-- AD SHOWS HERE -->
-        <div id="showTaskMessage">
-          Complete task to restart game <br /> <br />
-          <button onclick="showGenie()">Show task</button>
-        </div>
-      </div>
+  </div>
+  <div class="ground-container">
+    <div class="ground-moving"></div>
+  </div>
+  <div class="border-right"></div>
+</div>
+<div id="genie">
+  <div class="genie-container">
+    <!-- AD SHOWS HERE -->
+    <div id="rapydgenie"></div>
+    <div id="showTaskMessage">
+      Complete task to restart game <br />
+      <button onclick="showGenie()">Show task</button>
     </div>
-    <script type="module" src="/src/main.tsx"></script>
-  </body>
+  </div>
+</div>
+<script type="module" src="/src/main.tsx"></script>
+</body>
 
 <script type="module">
   import { get } from "cookie-toss";
   document.addEventListener('genieShowAd', async () => {
+    console.log(`genieShowAd received`)
     const res = await get({
       iframeUrl: 'https://rapydgenie.netlify.app/',
       dataKey: 'rapidGenieUser',
     });
-    const userId = res.userId;
+    const userId = res !== null ? res.userId : '';
     localStorage.setItem('userId', userId);
-    const viewerId = localStorage.getItem('viewerId');
+    const viewerId = localStorage.getItem('viewerId') || '';
+    console.log(`processGenie in window ${('processGenie' in window)}`);
     window.processGenie(userId, viewerId);
   });
   window.addEventListener('message', function (e) {
@@ -53,7 +59,7 @@
     if (data === 'rapydGenieSuccess') {
       window.emitTrait('incentivised_by_game_regain_lives');
       console.log(`received message: ${JSON.stringify(data)}`);
-      setTimeout(() => {location.reload()}, 3500);
+      setTimeout(() => {location.reload()}, 4500);
     }
   });
 </script>
