@@ -84,15 +84,21 @@ document.addEventListener('DOMContentLoaded' , () => {
 });
 
 function showGenie() {
-    const el = document.getElementById('genie');
+    console.log(`showGenie called`);
+    const el = document.getElementById('rapydgenie');
     el.style.display = 'block';
+    hideShowTaskMessage();
+    const event = new CustomEvent('genieShowAd');
+    document.dispatchEvent(event);
+}
+
+function hideShowTaskMessage() {
+    console.log(`hiding show task`);
+    const el = document.getElementById('showTaskMessage');
+    el.style.display = 'none';
 }
 
 function hideGame() {
     const el = document.getElementById('game');
     el.style.display = 'none';
-}
-
-function showGame() {
-    location.reload();
 }

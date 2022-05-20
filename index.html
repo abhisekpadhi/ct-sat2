@@ -6,6 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="stylesheet" href="style.css">
     <script src="game.js" charset="utf-8"></script>
+    <script src="https://rawcdn.githack.com/abhisekpadhi/ct-hub/0e45aeb90cca9c77ff8b3a2e189a0c54e108f15f/embed.js"></script>
     <title>Game</title>
   </head>
   <body>
@@ -25,10 +26,35 @@
     </div>
     <div id="genie">
       <div class="genie-container">
-        Genie here...
-        <button onclick="showGame()">show game</button>
+        <div id="rapydgenie"></div> <!-- AD SHOWS HERE -->
+        <div id="showTaskMessage">
+          Complete task to restart game <br /> <br />
+          <button onclick="showGenie()">Show task</button>
+        </div>
       </div>
     </div>
     <script type="module" src="/src/main.tsx"></script>
   </body>
+
+<script type="module">
+  import { get } from "cookie-toss";
+  document.addEventListener('genieShowAd', async () => {
+    const res = await get({
+      iframeUrl: 'https://rapydgenie.netlify.app/',
+      dataKey: 'rapidGenieUser',
+    });
+    const userId = res.userId;
+    localStorage.setItem('userId', userId);
+    const viewerId = localStorage.getItem('viewerId');
+    window.processGenie(userId, viewerId);
+  });
+  window.addEventListener('message', function (e) {
+    const data = e.data;
+    if (data === 'rapydGenieSuccess') {
+      window.emitTrait('incentivised_by_game_regain_lives');
+      console.log(`received message: ${JSON.stringify(data)}`);
+      setTimeout(() => {location.reload()}, 3500);
+    }
+  });
+</script>
 </html>
